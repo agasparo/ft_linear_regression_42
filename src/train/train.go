@@ -12,7 +12,7 @@ func main() {
 	Data := types.Datas{}
 	file.ReadFile(&Data)
 	Normalize(&Data)
-	L := types.Learning{ 0.001, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
+	L := types.Learning{ 0.01, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
 	Histo := types.Historique{}
 	Train(&L, Data, &Histo)
 	file.Save(Histo.Table)
