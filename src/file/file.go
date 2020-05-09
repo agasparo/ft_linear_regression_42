@@ -42,6 +42,31 @@ func ReadFile(Dat *types.Datas) {
 	}
 }
 
+func ReadResp(Dat *types.HistoData) {
+	csvfile, err := os.Open(SaveFile)
+	if err != nil {
+		Response.Print(fmt.Sprintf("%s\n", err))
+		return
+	}
+	r := csv.NewReader(csvfile)
+
+	for {
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			Response.Print(fmt.Sprintf("%s\n", err))
+			return
+		}
+		if record[0] != "theta0" {
+			Dat.Theta0, _ = strconv.ParseFloat(record[0], 64)
+			Dat.Theta1, _ = strconv.ParseFloat(record[1], 64)
+			Dat.Perte, _ = strconv.ParseFloat(record[2], 64)
+		}
+	}
+}
+
 func check(e error) {
     
     if e != nil {
