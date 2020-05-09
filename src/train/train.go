@@ -12,7 +12,7 @@ func main() {
 	Data := types.Datas{}
 	file.ReadFile(&Data)
 	Normalize(&Data)
-	L := types.Learning{ 0.1, 1000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
+	L := types.Learning{ 0.001, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
 	Histo := types.Historique{}
 	Train(&L, Data, &Histo)
 	file.Save(Histo.Table)
@@ -43,9 +43,9 @@ func Compare(L *types.Learning, Histo *types.Historique, tmpTheta0 float64, tmpT
 		if Histo.Table[0].Perte > L.Perte {
 			nData := types.HistoData{ tmpTheta0, tmpTheta1, L.Perte }
 			Histo.Table[0] = nData
-			L.LearningRate *= 1.05
+			L.LearningRate *= 1.005
 		} else {
-			L.LearningRate *= 0.5
+			L.LearningRate *= 0.05
 		}
 	} else {
 		nData := types.HistoData{ tmpTheta0, tmpTheta1, L.Perte }
