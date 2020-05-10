@@ -2,6 +2,7 @@ include .env
 
 init:
 	go get github.com/fatih/color
+	go get -u github.com/wcharczuk/go-chart
 	go build src/train/train.go
 	go build src/predict/predict.go
 

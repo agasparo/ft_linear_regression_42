@@ -5,6 +5,7 @@ import (
 	"math"
 	"types"
 	"maths"
+	"courbe"
 )
 
 func main() {
@@ -12,10 +13,11 @@ func main() {
 	Data := types.Datas{}
 	file.ReadFile(&Data)
 	Normalize(&Data)
-	L := types.Learning{ 0.01, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
+	L := types.Learning{ 0.3, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
 	Histo := types.Historique{}
 	Train(&L, Data, &Histo)
 	file.Save(Histo.Table)
+	courbe.Init(Data, Histo.Table)
 }
 
 func Train(L *types.Learning, Data types.Datas, Histo *types.Historique) {
@@ -43,9 +45,9 @@ func Compare(L *types.Learning, Histo *types.Historique, tmpTheta0 float64, tmpT
 		if Histo.Table[0].Perte > L.Perte {
 			nData := types.HistoData{ tmpTheta0, tmpTheta1, L.Perte }
 			Histo.Table[0] = nData
-			L.LearningRate *= 1.005
+			L.LearningRate *= 1.05
 		} else {
-			L.LearningRate *= 0.05
+			L.LearningRate *= 0.5
 		}
 	} else {
 		nData := types.HistoData{ tmpTheta0, tmpTheta1, L.Perte }
