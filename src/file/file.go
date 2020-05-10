@@ -25,6 +25,7 @@ func ReadFile(Dat *types.Datas) {
 
 	Dat.Kilometre = make(map[int]float64)
 	Dat.Price = make(map[int]float64)
+	line := 0
 
 	for {
 		record, err := r.Read()
@@ -35,10 +36,11 @@ func ReadFile(Dat *types.Datas) {
 			Response.Print(fmt.Sprintf("%s\n", err))
 			return
 		}
-		if record[0] != "km" {
+		if line >= 1 {
 			Dat.Kilometre[len(Dat.Kilometre)], _ = strconv.ParseFloat(record[0], 64)
 			Dat.Price[len(Dat.Price)], _ = strconv.ParseFloat(record[1], 64)
 		}
+		line++
 	}
 }
 
@@ -49,6 +51,7 @@ func ReadResp(Dat *types.HistoData) (int) {
 		return (1)
 	}
 	r := csv.NewReader(csvfile)
+	line := 0
 
 	for {
 		record, err := r.Read()
@@ -59,7 +62,7 @@ func ReadResp(Dat *types.HistoData) (int) {
 			Response.Print(fmt.Sprintf("%s\n", err))
 			return (2)
 		}
-		if record[0] != "theta0" {
+		if line >= 1 {
 			if len(record) < 3 {
 				return (2)
 			}
@@ -67,6 +70,7 @@ func ReadResp(Dat *types.HistoData) (int) {
 			Dat.Theta1, _ = strconv.ParseFloat(record[1], 64)
 			Dat.Perte, _ = strconv.ParseFloat(record[2], 64)
 		}
+		line++
 	}
 	return (0)
 }
