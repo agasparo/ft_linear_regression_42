@@ -1,7 +1,6 @@
 include .env
 
 init:
-	go get -u github.com/kardianos/govendor
 	go get -u github.com/fatih/color
 	go get -u github.com/wcharczuk/go-chart
 	go build src/train/train.go
