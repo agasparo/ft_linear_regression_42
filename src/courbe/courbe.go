@@ -27,9 +27,11 @@ func AddPoint(Data types.Datas, All []chart.Series, Histo types.HistoData) ([]ch
 	Add := 1.0
 	if neg == 0 {
 		Add *= float64(nb)
+		Add /= 2
 	} else {
 		Add /= float64(nb)
 		Add *= 10
+		Add *= 2
 	}
 	fmt.Println(Add)
 
