@@ -17,6 +17,10 @@ func main() {
 	file.ReadFile(&Csv)
 	res := file.ReadResp(&Data)
 
+	if res == 2 {
+		Response.Print("You have a problem with the save file")
+		return
+	}
 	if res == 0 && (Data.Theta0 != 0 || Data.Theta1 != 0) {
 		kilometrage, _ := input.ReadSTDIN("Choose a km", 0)
 		tmp_kilometrage := norm.Normalize(Csv, kilometrage)

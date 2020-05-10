@@ -57,9 +57,12 @@ func ReadResp(Dat *types.HistoData) (int) {
 		}
 		if err != nil {
 			Response.Print(fmt.Sprintf("%s\n", err))
-			return (1)
+			return (2)
 		}
 		if record[0] != "theta0" {
+			if len(record) < 3 {
+				return (2)
+			}
 			Dat.Theta0, _ = strconv.ParseFloat(record[0], 64)
 			Dat.Theta1, _ = strconv.ParseFloat(record[1], 64)
 			Dat.Perte, _ = strconv.ParseFloat(record[2], 64)
