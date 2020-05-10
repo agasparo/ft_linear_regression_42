@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"fmt"
 	"maths"
+	"norm"
 )
 
 func Init(Data types.Datas, Histo types.HistoData) {
@@ -21,10 +22,13 @@ func AddPoint(Data types.Datas, All []chart.Series, Histo types.HistoData) ([]ch
 
 	var tabx, taby, tmp []float64
 
+	s := maths.GetSize(maths.Max(Data.Kilometre))
+	Add := float64(1 * maths.TransSize(s - 4))
+
 	for i := 0; i < len(Data.Kilometre); i++ {
 
-		tabx = append(tabx, Data.Kilometre[i], Data.Kilometre[i] + 100)
-		taby = append(taby, Data.Price[i], Data.Price[i] + 100)
+		tabx = append(tabx, Data.Kilometre[i], Data.Kilometre[i] + Add)
+		taby = append(taby, Data.Price[i], Data.Price[i] + Add)
 		
 		All = append(All, chart.ContinuousSeries {
 	        XValues: tabx,
@@ -43,27 +47,18 @@ func AddCourbe(Data types.Datas, All []chart.Series, Histo types.HistoData) ([]c
 
 	for i := 0; i < len(Data.Kilometre); i++ {
 
-		x := Histo.Theta0 + (Histo.Theta1 * Normalize(Data, Data.Kilometre[i]))
-		y := Denormalize(Data, x)
+		x := Histo.Theta0 + (Histo.Theta1 * norm.Normalize(Data, Data.Kilometre[i]))
+		y := norm.Denormalize(Data, x)
 
 		tabx = append(tabx, Data.Kilometre[i])
 		taby = append(taby, y)
 	}
 	All = append(All, chart.ContinuousSeries {
+		Name:    "f(x)",
 	    XValues: tabx,
 	    YValues: taby,
 	})
 	return (All)	
-}
-
-func Normalize(Data types.Datas, kilometrage float64) (float64) {
-
-	return ((kilometrage - maths.Min(Data.Kilometre)) / (maths.Max(Data.Kilometre) - maths.Min(Data.Kilometre)))
-}
-
-func Denormalize(Data types.Datas, prix float64) (float64) {
-
-	return ((prix * (maths.Max(Data.Price) - maths.Min(Data.Price))) + maths.Min(Data.Price))
 }
 
 func Draw(All []chart.Series) {
@@ -72,6 +67,10 @@ func Draw(All []chart.Series) {
 
 	graph := chart.Chart{
 		Series: All,
+	}
+
+	graph.Elements = []chart.Renderable{
+		chart.Legend(&graph),
 	}
 
 	f, _ := os.Create("output.png")
