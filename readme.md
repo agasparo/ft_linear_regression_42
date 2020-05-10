@@ -11,3 +11,4 @@ Bonus :
   - affichage de l'erreur
 
  - couleurs
+ - rapidite de calcul
