@@ -42,11 +42,11 @@ func ReadFile(Dat *types.Datas) {
 	}
 }
 
-func ReadResp(Dat *types.HistoData) {
+func ReadResp(Dat *types.HistoData) (int) {
 	csvfile, err := os.Open(SaveFile)
 	if err != nil {
 		Response.Print(fmt.Sprintf("%s\n", err))
-		return
+		return (1)
 	}
 	r := csv.NewReader(csvfile)
 
@@ -57,7 +57,7 @@ func ReadResp(Dat *types.HistoData) {
 		}
 		if err != nil {
 			Response.Print(fmt.Sprintf("%s\n", err))
-			return
+			return (1)
 		}
 		if record[0] != "theta0" {
 			Dat.Theta0, _ = strconv.ParseFloat(record[0], 64)
@@ -65,6 +65,7 @@ func ReadResp(Dat *types.HistoData) {
 			Dat.Perte, _ = strconv.ParseFloat(record[2], 64)
 		}
 	}
+	return (0)
 }
 
 func check(e error) {
