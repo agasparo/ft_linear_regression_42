@@ -4,14 +4,14 @@ import (
 	"file"
 	"math"
 	"types"
-	"maths"
+	"norm"
 )
 
 func main() {
 
 	Data := types.Datas{}
 	file.ReadFile(&Data)
-	Normalize(&Data)
+	norm.NormalizeAllData(&Data)
 	L := types.Learning{ 0.3, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
 	Histo := types.Historique{}
 	Train(&L, Data, &Histo)
@@ -54,23 +54,6 @@ func Compare(L *types.Learning, Histo *types.Historique, tmpTheta0 float64, tmpT
 	L.Theta0 = Histo.Table[0].Theta0
 	L.Theta1 = Histo.Table[0].Theta1
 	L.Perte = Histo.Table[0].Perte
-}
-
-func Normalize(Data *types.Datas) {
-
-	minK := maths.Min(Data.Kilometre)
-	maxK := maths.Max(Data.Kilometre)
-	
-	for i := 0; i < len(Data.Kilometre); i++ {
-		Data.Kilometre[i] = (Data.Kilometre[i] - minK) / (maxK - minK)
-	}
-
-	minP := maths.Min(Data.Price)
-	maxP := maths.Max(Data.Price)
-	
-	for i := 0; i < len(Data.Price); i++ {
-		Data.Price[i] = (Data.Price[i] - minP) / (maxP - minP)
-	}
 }
 
 func MoindreCarre(L *types.Learning, Data types.Datas) (float64) {
