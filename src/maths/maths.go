@@ -30,18 +30,24 @@ func GetSize(nb float64) (int) {
 
 	s := 0
 
-	for i := nb; i > 1; i /= 10 {
+	for i := nb; i > 1.1; i /= 10 {
 		s++
 	}
 	return (s)
 }
 
-func TransSize(nb int) (int) {
+func TransSize(nb int) (int, int) {
 
 	s := 1
+	a := 0
+
+	if nb < 0 {
+		nb = nb * -1
+		a = 1
+	}
 
 	for i := 0; i < nb; i++ {
 		s *= 10
 	}
-	return (s)
+	return s, a
 }

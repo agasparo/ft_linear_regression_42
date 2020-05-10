@@ -23,7 +23,15 @@ func AddPoint(Data types.Datas, All []chart.Series, Histo types.HistoData) ([]ch
 	var tabx, taby, tmp []float64
 
 	s := maths.GetSize(maths.Max(Data.Kilometre))
-	Add := float64(1 * maths.TransSize(s - 4))
+	nb, neg := maths.TransSize(s - 4)
+	Add := 1.0
+	if neg == 0 {
+		Add *= float64(nb)
+	} else {
+		Add /= float64(nb)
+		Add *= 10
+	}
+	fmt.Println(Add)
 
 	for i := 0; i < len(Data.Kilometre); i++ {
 
