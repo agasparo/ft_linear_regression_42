@@ -54,7 +54,7 @@ func AddCourbe(Data types.Datas, All []chart.Series, Histo types.HistoData) ([]c
 		taby = append(taby, y)
 	}
 	All = append(All, chart.ContinuousSeries {
-		Name:    "f(x)",
+		Name:    "f(x) | (error : " + fmt.Sprintf("%f)", Histo.Perte),
 	    XValues: tabx,
 	    YValues: taby,
 	})
