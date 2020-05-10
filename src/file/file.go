@@ -45,6 +45,9 @@ func ReadFile(Dat *types.Datas) (int) {
 		}
 		line++
 	}
+	if line == 0 {
+		return (1)
+	}
 	return (0)
 }
 
