@@ -73,7 +73,6 @@ func check(e error) {
         Response.Print(fmt.Sprintf("%s\n", e))
     } else {
     	Response.Sucess("File created")
-    	Response.Sucess("Drawing courbe")
     }
 }
 

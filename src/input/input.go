@@ -8,14 +8,17 @@ import (
 	"strconv"
 )
 
-func ReadSTDIN() (float64) {
+func ReadSTDIN(str string, t int) (float64, string) {
 
-	fmt.Println("Choose a km")
+	fmt.Println(str)
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
 	input := ReplaceWhiteSpace(text)
-	f, _ := strconv.ParseFloat(input, 64)
-	return (f)
+	if t == 0 {
+		f, _ := strconv.ParseFloat(input, 64)
+		return f, ""
+	}
+	return 0, input
 }
 
 func ReplaceWhiteSpace(text string) (string) {

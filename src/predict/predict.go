@@ -7,6 +7,7 @@ import(
 	"Response"
 	"input"
 	"maths"
+	"courbe"
 )
 
 func main() {
@@ -16,11 +17,16 @@ func main() {
 	file.ReadFile(&Csv)
 	file.ReadResp(&Data)
 
-	kilometrage := input.ReadSTDIN()
+	kilometrage, _ := input.ReadSTDIN("Choose a km", 0)
 	tmp_kilometrage := Normalize(Csv, kilometrage)
 
 	res := Data.Theta0 + (Data.Theta1 * tmp_kilometrage)
 	Response.Sucess(fmt.Sprintf("For %f km : %f $\n", kilometrage, Denormalize(Csv, res)))
+
+	_, Graph := input.ReadSTDIN("See graph : [y] yes / [n] no", 1)
+	if Graph == "y" {
+		courbe.Init(Csv, Data)
+	}
 }
 
 func Normalize(Data types.Datas, kilometrage float64) (float64) {

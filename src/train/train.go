@@ -5,7 +5,6 @@ import (
 	"math"
 	"types"
 	"maths"
-	"courbe"
 )
 
 func main() {
@@ -17,7 +16,6 @@ func main() {
 	Histo := types.Historique{}
 	Train(&L, Data, &Histo)
 	file.Save(Histo.Table)
-	courbe.Init(Data, Histo.Table)
 }
 
 func Train(L *types.Learning, Data types.Datas, Histo *types.Historique) {
