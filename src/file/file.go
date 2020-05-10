@@ -14,12 +14,12 @@ import (
 const File = "data/data.csv"
 const SaveFile = "data/res.csv"
 
-func ReadFile(Dat *types.Datas) {
+func ReadFile(Dat *types.Datas) (int) {
 
 	csvfile, err := os.Open(File)
 	if err != nil {
 		Response.Print(fmt.Sprintf("%s\n", err))
-		return
+		return (1)
 	}
 	r := csv.NewReader(csvfile)
 
@@ -34,14 +34,18 @@ func ReadFile(Dat *types.Datas) {
 		}
 		if err != nil {
 			Response.Print(fmt.Sprintf("%s\n", err))
-			return
+			return (2)
 		}
 		if line >= 1 {
+			if len(record) < 2 || len(record) > 2 {
+				return (2)
+			}
 			Dat.Kilometre[len(Dat.Kilometre)], _ = strconv.ParseFloat(record[0], 64)
 			Dat.Price[len(Dat.Price)], _ = strconv.ParseFloat(record[1], 64)
 		}
 		line++
 	}
+	return (0)
 }
 
 func ReadResp(Dat *types.HistoData) (int) {

@@ -5,12 +5,20 @@ import (
 	"math"
 	"types"
 	"norm"
+	"Response"
 )
 
 func main() {
 
 	Data := types.Datas{}
-	file.ReadFile(&Data)
+	res := file.ReadFile(&Data)
+	if res == 2 {
+		Response.Print("You have a problem with the save file")
+		return
+	}
+	if res == 1 {
+		return
+	}
 	norm.NormalizeAllData(&Data)
 	L := types.Learning{ 0.3, 100000, 0, 0, float64(len(Data.Kilometre)), float64(len(Data.Price)), 0 }
 	Histo := types.Historique{}
