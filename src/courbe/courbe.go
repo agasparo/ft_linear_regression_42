@@ -90,4 +90,5 @@ func Draw(All []chart.Series) {
     }
 
     fmt.Println(string(stdout))
+    os.Remove("output.png")
 }
